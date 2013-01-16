@@ -28,6 +28,6 @@
     
     cookie('the_cookie', null);
 
-### Author
+## Author
 
 [Travis](http://travisup.com/)
