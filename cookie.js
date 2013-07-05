@@ -1,7 +1,7 @@
 /**
  * @Name    cookie.js
  * @Author  linyongji
- * @Version 1.0.0
+ * @Version 1.0.1
  */
 var cookie = function(name, value, options) {
     if(typeof name === "undefined") return null;
@@ -12,7 +12,7 @@ var cookie = function(name, value, options) {
             var cookies = document.cookie.split("; ");
             for (var i = 0; i < cookies.length; i++) {
                 if(cookies[i].indexOf(name+"=") === 0) {
-                    cookieValue = cookies[i].substr(name.length+1);
+                    cookieValue = decodeURIComponent(cookies[i].substr(name.length+1));
                     break;
                 }
             }
@@ -43,4 +43,4 @@ var cookie = function(name, value, options) {
     var ret = [name, "=", encodeURIComponent(value), expires, path, domain, secure].join("");
     document.cookie = ret;
     return ret;
-}
+};
