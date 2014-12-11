@@ -1,57 +1,58 @@
 /**
  * cookie.js
- * @Author  Travis(LinYongji)
- * @Contact http://travisup.com/
- * @Version 1.0.2
- * @date    2013-10-25
+ * @Author  Travis
+ * @Contact https://github.com/godxiaoji/cookie
+ * @Version 1.0.3
+ * @date    2014-12-11
  */
-var cookie = function( name, value, options ) {
-    var i, len,
-        cookies, ret, date,
-        expires, path, secure;
-    
-    // 没传入参数返回，不开放获取全部cookie
-    if ( name == null ) {
-        return ret;
+(function(undefined) {
+
+    function cookie(name, value) {
+        return name != null ?
+            cookie[value === undefined ? "get" : "set"].apply(null, arguments) :
+            undefined;
     }
-    // 读取cookie
-    if ( typeof value === "undefined" ) {
-        if ( document.cookie && document.cookie != "" ) {
-            cookies = document.cookie.split("; ");
-            for ( i = 0, len = cookies.length; i < len; i++ ) {
-                if ( cookies[i].indexOf( name + "=" ) === 0 ) {
-                    ret = decodeURIComponent( cookies[i].substr( name.length + 1 ) );
+    // 获取cookie
+    cookie.get = function(name) {
+        var ret, arr,
+            i, len;
+
+        if(document.cookie) {
+            arr = document.cookie.split("; ");
+            for(i = 0, len = arr.length; i < len; i++) {
+                if(arr[i].indexOf(name + "=") === 0) {
+                    ret = decodeURIComponent(arr[i].substr(name.length + 1));
                     break;
                 }
             }
         }
-        // 没找到返回undefined
         return ret;
-    }
+    };
     // 设置cookie
-    options = options || {};
-    // 设置为删除cookie
-    if ( value === null ) {
-        value = "";
-        options.expires = -1;
-    }
-    // 设置过期时间(支持传入秒和Date类型)
-    expires = "";
-    if ( options.expires && ( typeof options.expires === "number" || options.expires.toUTCString ) ) {
-        if ( typeof options.expires === "number" ) {
+    cookie.set = function(name, value, options) {
+        var arr = [], date;
+        options = options || {};
+
+        // 配置过期时间
+        if(value == null) {
+            value = "";
+            options.expires = -1;
+        }
+        if(typeof options.expires === "number") {
             date = new Date();
-            date.setTime( date.getTime() + options.expires * 1000 );
-        } else {
+            date.setTime(date.getTime() + options.expires * 1000);
+        } else if(options.expires instanceof Date) {
             date = options.expires;
         }
-        expires = "; expires=" + date.toUTCString();
-    }
-    // 设置域，安全性等
-    path = options.path ? "; path=" + options.path : "";
-    domain = options.domain ? "; domain=" + options.domain : "";
-    secure = options.secure ? "; secure" : "";
-    // 写入cookie
-    ret = [ name, "=", encodeURIComponent( value ), expires, path, domain, secure ].join("");
-    document.cookie = ret;
-    return ret;
-};
+
+        arr.push(name + "=" + encodeURIComponent(value));
+        date && arr.push("expires=" + date.toUTCString());
+        options.path && arr.push("path=" + options.path);
+        options.domain && arr.push("domain=" + options.domain);
+        options.secure && arr.push("secure");
+
+        return document.cookie = arr.join("; ");
+    };
+
+    window.cookie = cookie;
+})();
