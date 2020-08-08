@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body>
+    <p>
+      <label for="">name: <input type="text" id="name" /></label>
+      <label for="">value: <input type="text" id="value" /></label>
+      <button onclick="setCookie()">设置cookie</button>
+      <button onclick="getCookie()">获取cookie</button>
+    </p>
+    <script src="../dist/cookie.js"></script>
+    <script>
+      var $name = document.getElementById('name')
+      var $value = document.getElementById('value')
+
+      function setCookie() {
+        if (!$name.value) {
+          alert('必须填写name字段')
+          return
+        }
+        if ($value.value) {
+          cookie($name.value, $value.value)
+          alert('设置成功')
+        } else {
+          cookie($name.value, null)
+          alert('已删除name:' + $name.value)
+        }
+      }
+
+      function getCookie() {
+        if (!$name.value) {
+          alert('必须填写name字段')
+          return
+        }
+
+        alert($name.value + '=' + cookie($name.value))
+      }
+    </script>
+  </body>
+</html>
