@@ -7,8 +7,8 @@ export default [
       {
         format: 'umd',
         name: 'cookie',
-        file: 'lib/cookie.js',
-        exports: 'named'
+        file: 'dist/cookie.js',
+        exports: 'default'
       }
     ],
     plugins: [typescript({})]
