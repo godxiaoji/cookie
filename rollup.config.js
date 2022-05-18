@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript2'
+import { terser } from 'rollup-plugin-terser'
 
 export default [
   {
@@ -11,7 +12,7 @@ export default [
         exports: 'default'
       }
     ],
-    plugins: [typescript({})]
+    plugins: [typescript({}), terser({ compress: { drop_console: false } })]
   },
   {
     input: './src/cookie.ts',
