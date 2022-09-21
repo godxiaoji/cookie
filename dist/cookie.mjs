@@ -16,7 +16,7 @@ function getAllCookies() {
  * @param {String} name cookie名称
  */
 function getCookie(name) {
-    return getAllCookies()[name];
+    return getAllCookies()[name] || null;
 }
 /**
  * 设置指定cookie
@@ -80,10 +80,10 @@ function cookie(name, value, options) {
         return setCookie(name, value, options);
     }
 }
-cookie.set = setCookie;
-cookie.get = getCookie;
-cookie.getAll = getAllCookies;
-cookie.remove = removeCookie;
+cookie.setItem = setCookie;
+cookie.getItem = getCookie;
+cookie.getAllItems = getAllCookies;
+cookie.removeItem = removeCookie;
 cookie.serialize = serialize;
 
 export { cookie as default };

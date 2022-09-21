@@ -12,7 +12,7 @@ declare function getAllCookies(): Record<string, string>;
  * 获取指定cookie
  * @param {String} name cookie名称
  */
-declare function getCookie(name: string): string;
+declare function getCookie(name: string): string | null;
 /**
  * 设置指定cookie
  * @param name cookie名称
@@ -32,12 +32,12 @@ declare function removeCookie(name: string, options?: Options): string;
  * @param value cookie内容，null为删除
  * @param options {expires, path, domain, secure}
  */
-declare function cookie(name: string, value?: number | string | null, options?: Options): string;
+declare function cookie(name: string, value?: number | string | null, options?: Options): string | null;
 declare namespace cookie {
-    var set: typeof setCookie;
-    var get: typeof getCookie;
-    var getAll: typeof getAllCookies;
-    var remove: typeof removeCookie;
+    var setItem: typeof setCookie;
+    var getItem: typeof getCookie;
+    var getAllItems: typeof getAllCookies;
+    var removeItem: typeof removeCookie;
     var serialize: (name: string, value: string | number | null, options?: Options | undefined) => string;
 }
 export default cookie;

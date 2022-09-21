@@ -26,7 +26,7 @@ function getAllCookies() {
  * @param {String} name cookie名称
  */
 function getCookie(name: string) {
-  return getAllCookies()[name]
+  return getAllCookies()[name] || null
 }
 
 /**
@@ -110,10 +110,10 @@ function cookie(
   }
 }
 
-cookie.set = setCookie
-cookie.get = getCookie
-cookie.getAll = getAllCookies
-cookie.remove = removeCookie
+cookie.setItem = setCookie
+cookie.getItem = getCookie
+cookie.getAllItems = getAllCookies
+cookie.removeItem = removeCookie
 cookie.serialize = serialize
 
 export default cookie
